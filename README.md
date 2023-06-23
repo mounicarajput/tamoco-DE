@@ -1,3 +1,7 @@
+
+Note: If the problem occurs rendering the ```ce.ipynb``` file then you can use https://nbviewer.org/ to  view the Jupyter notebook.
+We just need to add the notebook URL : https://github.com/mounicarajput/tamoco-DE/blob/main/ce.ipynb
+
 # Technical Questions
 
 Open ```dataeng.txt``` file to view detailed explanation of the below Questions.
