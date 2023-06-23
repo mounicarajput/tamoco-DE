@@ -3,6 +3,8 @@ Tamoco uses Spark for most of the ETL workloads. When saving the final data,
 we have an ideal target file size of around 115MB. Explain how you would make sure
 that output files are approximately this size.
 
+Solution:
+
 In this case we can use the repartition() method to distribute the load.
 Assuming we have 1TB of data and as our requreiment the output files should be 115MB.
 So here we can calculate the ideal number of partition, in our case it will be approx 9k.
@@ -20,6 +22,7 @@ into the main branch of this repository into a S3 bucket.
 Describe how you would add a step that checks that validates all the
 Airflow DAGs before merging into the main branch.
 
+Solution:
 
 Step 1:
 - To check the Airflow Dags before merging into main Branch we can set up a Pre-merge Hook or pre-commit.
@@ -53,13 +56,14 @@ Assuming you know the exact location of the files inside Tamoco’s S3 bucket,
 describe how you would send a large amount of data to an external S3 bucket.
 In addition, outline how you would estimate the overall cost of the transfer.
 
+Solution:
 
 To transfer the Large Amount of data we should consider using DataSync
 as we need to transfer data within the AWS so we will follow Transfer data within AWS
 (move data from one location in the AWS Cloud to another.)
 
 Step 1: Configuring
-- First we need to setup the external S3 bucket for data transfer,
+- First we need to set up the external S3 bucket for data transfer,
   We can set up via AWS CLI as Datasync doesn't have option to create location for different account.
 - Need to be sure that we granted the Permission from both side of source.
 
