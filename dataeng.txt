@@ -1,0 +1,78 @@
+Q1 - Spark
+Tamoco uses Spark for most of the ETL workloads. When saving the final data,
+we have an ideal target file size of around 115MB. Explain how you would make sure
+that output files are approximately this size.
+
+In this case we can use the repartition() method to distribute the load.
+Assuming we have 1TB of data and as our requreiment the output files should be 115MB.
+So here we can calculate the ideal number of partition, in our case it will be approx 9k.
+So in spark we can leverage the repartition() function as repartition(9000).
+It will distribute the load across the clusters.
+
+After partitioning the data you can save the partitioned data into desired file format with desired file Size.
+
+
+Q2 - CI/CD
+
+Tamoco uses Apache Airflow for orchestration. Airflow code is stored in a Github repository,
+and we have a simple CI/CD pipeline built with AWS Code Build that copies any code merged
+into the main branch of this repository into a S3 bucket.
+Describe how you would add a step that checks that validates all the
+Airflow DAGs before merging into the main branch.
+
+
+Step 1:
+- To check the Airflow Dags before merging into main Branch we can set up a Pre-merge Hook or pre-commit.
+  that can validate the Airflow dags.
+
+Step 2:
+
+- Create a validation script that check for any potential issues or errors in the DAG files.
+
+Step 3:
+
+- Incorporate the validation step in the pre-merge hook.
+
+Step 4:
+
+- Install necessary dependencies: Ensure that the environment
+  where the pre-merge hook runs has the required dependencies installed.
+  This includes Airflow, its CLI, and any additional packages or libraries needed for the validation script.
+
+Step 5:
+
+- Test the validation process: Perform thorough testing of the pre-merge
+  hook and validation script to ensure they are working as expected.
+  Test various scenarios, such as valid DAGs, invalid DAGs
+
+
+Q3 - AWS Services
+
+Tamoco regularly needs to send large amounts of data to clients (in the TBs range).
+Assuming you know the exact location of the files inside Tamoco’s S3 bucket,
+describe how you would send a large amount of data to an external S3 bucket.
+In addition, outline how you would estimate the overall cost of the transfer.
+
+
+To transfer the Large Amount of data we should consider using DataSync
+as we need to transfer data within the AWS so we will follow Transfer data within AWS
+(move data from one location in the AWS Cloud to another.)
+
+Step 1: Configuring
+- First we need to setup the external S3 bucket for data transfer,
+  We can set up via AWS CLI as Datasync doesn't have option to create location for different account.
+- Need to be sure that we granted the Permission from both side of source.
+
+Step 2: Setting up task for data transfer
+- Create a DataSync Task for Source and destination location.
+- BY using AWS console you can perform create and Run the DataSync Task.
+
+Step 3: Schedule and Monitor
+- DataSync also provide option to schedule this task, we just need to choose frequency of task.
+- For errors and failures you can log task execution in CloudWatch.
+
+Step 4: Calculate Pricing.
+- We can use DataSync Pricing as it offer pay only for the amount of data transfer.
+- We can also use AWS Pricing Calculator.
+
+
